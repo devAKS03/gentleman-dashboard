@@ -216,17 +216,8 @@ export default function Home() {
                 <div className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden flex items-center justify-center text-white font-medium text-sm">
                   {previewImage ? (
                     <img src={previewImage} alt="Profile" className="object-cover w-full h-full" />
-                  ) : profileData?.image ? (
-                    <img
-                      src={profileData?.image}
-                      alt={profileData?.name || "Admin"}
-                      className="object-cover w-full h-full"
-                      onError={(e) => {
-                        e.currentTarget.style.display = "none";
-                        e.currentTarget.parentElement!.textContent =
-                          profileData.name?.[0].toUpperCase() || "AD";
-                      }}
-                    />
+                  ) : profileData?.profileImage ? (
+                    <img src={profileData.profileImage} alt={profileData.name || "Admin"} className="object-cover w-full h-full" />
                   ) : (
                     (profileData.name?.[0] || "A").toUpperCase()
                   )}
