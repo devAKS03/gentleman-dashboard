@@ -149,7 +149,7 @@ export default function ServicesPage() {
                 <td className="p-3">
                   {service.icon ? (
                     <img
-                      src={`https://findcarpros.com${service.icon}`}
+                      src={service.icon}
                       alt={service.title}
                       className="w-12 h-12 object-cover rounded-md"
                     />

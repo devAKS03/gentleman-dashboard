@@ -234,7 +234,7 @@ export default function Home() {
               </div>
             )}
 
-            <span className="font-medium">{profileData.role}</span>
+            <span className="font-medium">{profileData?.role}</span>
           </div>
         </div>
       </header>

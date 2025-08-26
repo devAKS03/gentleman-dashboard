@@ -1,6 +1,6 @@
 // src/pages/Signup.tsx
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "@/Redux/features/auth/registerApi";
 
 const Signup = () => {
@@ -29,7 +29,7 @@ const Signup = () => {
     console.log(result)
     if(result?.data?.success){
       alert(result?.data?.message);
-      navigate('/login')
+      navigate('/')
     }
 
  } catch (error) {
@@ -38,10 +38,10 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
+    <div className="min-h-screen flex items-center justify-center bg-primary text-white">
       <form
         onSubmit={handleSubmit}
-        className="bg-gray-800 p-6 rounded shadow-md space-y-4 w-96"
+        className="bg-white p-6 rounded shadow-md space-y-4 w-96"
       >
         <h2 className="text-xl font-bold text-center">Sign Up</h2>
 
@@ -52,7 +52,7 @@ const Signup = () => {
           placeholder="Full Name"
           value={formData.name}
           onChange={handleChange}
-          className="w-full px-4 py-2 rounded bg-gray-700 focus:outline-none"
+          className="w-full px-4 py-2 rounded bg-gray-200 text-black focus:outline-none"
           required
         />
 
@@ -63,7 +63,7 @@ const Signup = () => {
           placeholder="Email"
           value={formData.email}
           onChange={handleChange}
-          className="w-full px-4 py-2 rounded bg-gray-700 focus:outline-none"
+          className="w-full px-4 py-2 rounded bg-gray-200 text-black focus:outline-none"
           required
         />
 
@@ -74,7 +74,7 @@ const Signup = () => {
           placeholder="Password"
           value={formData.password}
           onChange={handleChange}
-          className="w-full px-4 py-2 rounded bg-gray-700 focus:outline-none"
+          className="w-full px-4 py-2 rounded bg-gray-200 text-black focus:outline-none"
           required
         />
 
@@ -85,7 +85,16 @@ const Signup = () => {
         >
           Sign Up
         </button>
+
+        <p className="mt-4 text-center text-sm text-black">
+  Already have an account?{" "}
+  <Link to="/" className="text-green-600 hover:underline">
+    Login
+  </Link>
+</p>
+
       </form>
+      
     </div>
   );
 };
