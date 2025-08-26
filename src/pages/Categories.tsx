@@ -128,7 +128,8 @@ export default function Categories() {
           type="file"
           accept="image/*"
           onChange={handleImageChange}
-          className="w-full"
+          className="p-5 text-black bg-white  rounded-2xl"
+          required
         />
 
         <button
