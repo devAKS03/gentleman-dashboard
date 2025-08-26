@@ -157,7 +157,7 @@ export default function Categories() {
                 <td className="p-3">
                   {category.icon ? (
                     <img
-                      src={`https://findcarpros.com${category.icon}`}
+                      src={category.icon}
                       alt={category.title}
                       className="w-12 h-12 object-cover rounded-md"
                     />

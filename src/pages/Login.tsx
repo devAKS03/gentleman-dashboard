@@ -1,6 +1,6 @@
 // src/pages/Login.tsx
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useLoginMutation } from "@/Redux/features/auth/loginApi";
 import { useDispatch } from "react-redux";
@@ -13,18 +13,19 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch()
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const result = await login({email,password});
+      const result = await login({ email, password });
       console.log("----------------------------------------------------")
       console.log(result)
-      if(result?.data?.success){
-        dispatch(setUser({user:result?.data?.data?.user, token:result?.data?.data?.accessToken
-}))
+      if (result?.data?.success) {
+        dispatch(setUser({
+          user: result?.data?.data?.user, token: result?.data?.data?.accessToken
+        }))
         alert(result?.data?.message);
-        navigate('/')
+        navigate('/dashboard')
       }
     } catch (error) {
       console.log(error)
@@ -74,7 +75,16 @@ const Login = () => {
         >
           Login
         </button>
+
+        <p className="mt-4 text-center text-sm text-black">
+          Already have an account?{" "}
+          <Link to="/signup" className="text-green-600 hover:underline">
+            signup
+          </Link>
+        </p>
       </form>
+
+
     </div>
   );
 };
