@@ -128,24 +128,29 @@ const Utilisateurs = () => {
   }, [data]);
 
   const handleEdit = async (id: string) => {
-    const { value: status } = await Swal.fire({
-      title: "Entrer le nouveau statut",
-      input: "text",
-      inputPlaceholder: "Tapez un statut ici",
-      showCancelButton: true,
-    });
+  const { value: status } = await Swal.fire({
+    title: "Choisir le nouveau statut",
+    input: "select",
+    inputOptions: {
+      active: "Active",
+      inactive: "Inactive",
+    },
+    inputPlaceholder: "Sélectionnez un statut",
+    showCancelButton: true,
+  });
 
-    if (status) {
-      try {
-        await updateUser({ id, data: { status } }).unwrap();
-        Swal.fire("Mis à jour !", `Statut mis à jour à "${status}".`, "success");
-        refetch();
-      } catch (error) {
-        Swal.fire("Erreur !", "Échec de la mise à jour du statut.", "error");
-        console.error("Erreur mise à jour :", error);
-      }
+  if (status) {
+    try {
+      await updateUser({ id, data: { status } }).unwrap();
+      Swal.fire("Mis à jour !", `Statut mis à jour à "${status}".`, "success");
+      refetch();
+    } catch (error) {
+      Swal.fire("Erreur !", "Échec de la mise à jour du statut.", "error");
+      console.error("Erreur mise à jour :", error);
     }
-  };
+  }
+};
+
 
   // const handleView = (id: any) => console.log("Voir le service :", id);
 
