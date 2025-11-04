@@ -209,7 +209,7 @@ export default function Categories() {
                 <td className="p-3">{new Date(category.createdAt).toLocaleDateString()}</td>
                 <td className="p-3">
                   <Trash2
-                  
+                onClick={() => handleDelete(category.id)}
                   className="cursor-pointer" size={20} />
                 </td>
               </tr>
