@@ -4,11 +4,16 @@ import { useState } from "react";
 import { useAddCategoryMutation, useGetCategoriesQuery } from "@/Redux/features/dashboard/dashboard/categoryApi";
 import { useGetServicesQuery } from "@/Redux/features/dashboard/dashboard/servicesApi";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import { Trash2 } from "lucide-react";
+import { useDeleteCategoryMutation } from "@/Redux/features/dashboard/dashboard/deleteCategory";
+import Swal from "sweetalert2";
 
 export default function Categories() {
   const { data: servicesData, isLoading: servicesLoading } = useGetServicesQuery({});
-  const { data: categoriesData, isLoading: categoriesLoading } = useGetCategoriesQuery({});
+  const { data: categoriesData, isLoading: categoriesLoading,refetch } = useGetCategoriesQuery({});
   const [addCategory, { isLoading: isSubmitting }] = useAddCategoryMutation();
+  
+  const [deleteCategory] = useDeleteCategoryMutation();
 
   const [title, setTitle] = useState("");
   const [icon, setIcon] = useState<File | null>(null);
@@ -77,6 +82,38 @@ export default function Categories() {
       </div>
     );
   }
+
+
+
+  const handleDelete = async (id: string) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#F9AA43",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await deleteCategory(id).unwrap();
+        Swal.fire("Deleted!", "Category has been deleted.", "success");
+
+        refetch()
+        // Optionally, refetch categories if needed
+      } catch (err) {
+        console.error("Delete failed:", err);
+        Swal.fire("Error!", "Failed to delete category.", "error");
+      }
+    }
+  };
+
+
+
+
+
 
   return (
     <div className="p-6">
@@ -150,6 +187,7 @@ export default function Categories() {
               <th className="p-3 border-b">Title</th>
               <th className="p-3 border-b">Service</th>
               <th className="p-3 border-b">Created At</th>
+              <th className="p-3 border-b">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -169,6 +207,11 @@ export default function Categories() {
                 <td className="p-3">{category.title}</td>
                 <td className="p-3">{category.service?.title || "-"}</td>
                 <td className="p-3">{new Date(category.createdAt).toLocaleDateString()}</td>
+                <td className="p-3">
+                  <Trash2
+                  
+                  className="cursor-pointer" size={20} />
+                </td>
               </tr>
             ))}
           </tbody>
