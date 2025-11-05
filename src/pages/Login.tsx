@@ -7,6 +7,9 @@ import { useDispatch } from "react-redux";
 import { setUser } from "@/Redux/features/auth/authSlice";
 import { toast } from "react-toastify";
 import { useChangePasswordMutation } from "@/Redux/features/dashboard/dashboard/changePassword";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "@/Redux/features/auth/authSlice";
+import { Navigate } from "react-router-dom";
 
 const Login = () => {
   const [login] = useLoginMutation();
@@ -26,6 +29,13 @@ const Login = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const user = useSelector(selectCurrentUser);
+
+  // 🔹 Redirect if already logged in
+  if (user) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   // Login handler
   const handleLogin = async (e: React.FormEvent) => {
@@ -107,7 +117,7 @@ const Login = () => {
         {/* Login button */}
         <button
           type="submit"
-          className="w-full bg-primary hover:bg-primary/80 py-2 rounded"
+          className="w-full bg-primary hover:bg-primary/80 py-2 rounded cursor-pointer"
         >
           Login
         </button>
@@ -160,7 +170,7 @@ const Login = () => {
             <button
               type="button"
               onClick={handleChangePassword}
-              className="w-full bg-green-600 hover:bg-green-700 py-2 rounded text-white"
+              className="w-full bg-green-600 hover:bg-green-700 py-2 rounded text-white cursor-pointer"
             >
               Change Password
             </button>
