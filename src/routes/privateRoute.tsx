@@ -1,27 +1,23 @@
-// src/routes/privateRoute.tsx
-import type { ReactNode } from "react";
+
 import { Navigate } from "react-router-dom";
-import { useAuthStore } from "@/store/useAuthStore";
+import { useSelector } from "react-redux";
+import { selectCurrentUser, useCurrentToken } from "@/Redux/features/auth/authSlice";
+import type { ReactNode } from "react";
 
 interface PrivateRouteProps {
   children: ReactNode;
-  allowedRoles?: string[];
 }
 
-const PrivateRoute = ({ children, allowedRoles }: PrivateRouteProps) => {
-  const user = useAuthStore((state) => state.user);
+const PrivateRoute = ({ children }: PrivateRouteProps) => {
+  const user = useSelector(selectCurrentUser);
+  const token = useSelector(useCurrentToken);
 
-  if (!user) {
+  if (!user || !token) {
     // Not logged in
     return <Navigate to="/" replace />;
   }
 
-  if (allowedRoles && !allowedRoles.includes(user.role)) {
-    // Role not allowed
-    return <Navigate to="/unauthorized" replace />;
-  }
-
-  return children;
+  return <>{children}</>;
 };
 
 export default PrivateRoute;

@@ -7,6 +7,11 @@ import { FaHistory, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { TbLayoutDashboard } from "react-icons/tb";
 
+import { useDispatch } from "react-redux";
+import { logOut } from "@/Redux/features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
+import { FiLogOut } from "react-icons/fi";
+
 import {
   Tooltip,
   TooltipContent,
@@ -21,6 +26,16 @@ const Sidebar = () => {
   const setMobile = useSidebarStore((state) => state.setMobile);
 
   const location = useLocation();
+
+
+    const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // Logout function
+  const handleLogout = () => {
+    dispatch(logOut());
+    navigate("/"); // redirect to login page
+  };
 
   useLayoutEffect(() => {
     const handleResize = () => {
@@ -116,6 +131,17 @@ const Sidebar = () => {
           </ul>
         </TooltipProvider>
       </nav>
+
+
+      <div className="mt-4">
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center justify-center gap-2 p-2 rounded-lg bg-red-400 text-white cursor-pointer"
+        >
+          <FiLogOut className="w-5 h-5" />
+          {isOpen && <span>Logout</span>}
+        </button>
+      </div>
     </motion.aside>
   );
 };

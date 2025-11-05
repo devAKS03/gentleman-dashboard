@@ -9,6 +9,7 @@ import Signup from "@/pages/Signup";
 import Login from "@/pages/Login";
 import Services from "@/pages/Services";
 import Categories from "@/pages/Categories";
+import PrivateRoute from "./privateRoute";
 
 
 const AppRoutes = () => {
@@ -19,7 +20,16 @@ const AppRoutes = () => {
       <Route path="/" element={<Login />} />
 
       {/* ✅ Nested routes under DashboardLayout */}
-      <Route path="/dashboard" element={<DashboardLayout />}>
+      {/* <Route path="/dashboard" element={<DashboardLayout />}> */}
+
+       <Route
+        path="/dashboard"
+        element={
+          <PrivateRoute>
+            <DashboardLayout />
+          </PrivateRoute>
+        }
+      >
         <Route path="" element={<Home />} />
         <Route path="utilisateurs" element={<Utilisateurs />} />
         <Route path="history" element={<History />} />
