@@ -105,7 +105,7 @@ export default function ServicesPage() {
         <h1 className="text-2xl font-semibold">Services</h1>
         <Dialog>
           <DialogTrigger asChild>
-            <button className="px-4 py-2 bg-[#F9AA43] text-white rounded-lg ">
+            <button className="px-4 py-2 bg-[#F9AA43] text-white rounded-lg cursor-pointer">
               + Create Service
             </button>
           </DialogTrigger>
