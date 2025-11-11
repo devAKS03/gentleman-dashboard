@@ -9,6 +9,7 @@ import Signup from "@/pages/Signup";
 import Login from "@/pages/Login";
 import Services from "@/pages/Services";
 import Categories from "@/pages/Categories";
+import PrivateRoute from "./privateRoute";
 
 
 const AppRoutes = () => {
@@ -16,17 +17,26 @@ const AppRoutes = () => {
     <Routes>
       {/* ✅ Fixed signup route */}
       <Route path="/signup" element={<Signup />} />
-      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Login />} />
 
       {/* ✅ Nested routes under DashboardLayout */}
-      <Route path="/" element={<DashboardLayout />}>
-        <Route index element={<Home />} />
+      {/* <Route path="/dashboard" element={<DashboardLayout />}> */}
+
+       <Route
+        path="/dashboard"
+        element={
+          <PrivateRoute>
+            <DashboardLayout />
+          </PrivateRoute>
+        }
+      >
+        <Route path="" element={<Home />} />
         <Route path="utilisateurs" element={<Utilisateurs />} />
         <Route path="history" element={<History />} />
         <Route path="request" element={<Request />} />
         <Route path="service" element={<Services/>} />
         <Route path="categories" element={<Categories />} />
-        <Route path="*" element={<Error />} /> {/* Catch-all route */}
+        <Route path="*" element={<Error />} />
       </Route>
     </Routes>
   );

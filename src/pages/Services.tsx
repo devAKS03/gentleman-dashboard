@@ -10,10 +10,15 @@ import {
 } from "@/components/ui/dialog";
 import { useAddServiceMutation, useGetServicesQuery } from "@/Redux/features/dashboard/dashboard/servicesApi";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import { Trash2 } from "lucide-react";
+import Swal from "sweetalert2";
+import { useDeleteServiceMutation } from "@/Redux/features/dashboard/dashboard/deleteService";
 
 export default function ServicesPage() {
-  const { data, isLoading: servicesLoading } = useGetServicesQuery({});
+  const { data, isLoading: servicesLoading,refetch } = useGetServicesQuery({});
   const [addService, { isLoading: isSubmitting }] = useAddServiceMutation();
+    const [deleteService] = useDeleteServiceMutation();
+
 
   const [title, setTitle] = useState("");
   const [icon, setIcon] = useState<File | null>(null);
@@ -50,6 +55,32 @@ export default function ServicesPage() {
     }
   };
 
+
+
+
+  const handleDelete = async (id: string) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#F9AA43",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await deleteService(id).unwrap();
+        Swal.fire("Deleted!", "Service has been deleted.", "success");
+        refetch(); // ✅ Refetch after deleting service
+      } catch (err) {
+        console.error("Delete failed:", err);
+        Swal.fire("Error!", "Failed to delete service.", "error");
+      }
+    }
+  };
+
   // Static placeholder data for table
   const staticServices = [
     { id: 1, title: "Service A", categoryCount: 3, createdAt: "2025-08-01", icon: "" },
@@ -74,7 +105,7 @@ export default function ServicesPage() {
         <h1 className="text-2xl font-semibold">Services</h1>
         <Dialog>
           <DialogTrigger asChild>
-            <button className="px-4 py-2 bg-[#F9AA43] text-white rounded-lg ">
+            <button className="px-4 py-2 bg-[#F9AA43] text-white rounded-lg cursor-pointer">
               + Create Service
             </button>
           </DialogTrigger>
@@ -141,17 +172,20 @@ export default function ServicesPage() {
               <th className="p-3 border-b">Title</th>
               <th className="p-3 border-b">Category Count</th>
               <th className="p-3 border-b">Created At</th>
+              <th className="p-3 border-b">Action</th>
+
             </tr>
           </thead>
           <tbody>
             {(data?.data?.services || staticServices).map((service: any) => (
+              
               <tr key={service.id} className="border-b ">
                 <td className="p-3">
                   {service.icon ? (
                     <img
-                      src={`https://findcarpros.com${service.icon}`}
+                      src={service.icon}
                       alt={service.title}
-                      className="w-12 h-12 object-cover rounded-md"
+                      className="w-12 h-12 object-cover rounded-md border"
                     />
                   ) : (
                     <span className="text-gray-400">No icon</span>
@@ -160,6 +194,11 @@ export default function ServicesPage() {
                 <td className="p-3">{service.title}</td>
                 <td className="p-3">{service.categoryCount}</td>
                 <td className="p-3">{new Date(service.createdAt).toLocaleDateString()}</td>
+                <td className="p-3"> <Trash2
+                  
+                  onClick={() => handleDelete(service.id)}
+                  
+                  className="cursor-pointer" size={20} /></td>
               </tr>
             ))}
           </tbody>
