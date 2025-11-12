@@ -60,7 +60,7 @@ const Sidebar = () => {
     { to: "/dashboard/history", icon: <FaHistory className="w-5 h-5" />, text: "Historique" },
     { to: "/dashboard/request", icon: <IoSettingsSharp className="w-5 h-5" />, text: "Requêtes" },
     { to: "/dashboard/service", icon: <IoSettingsSharp className="w-5 h-5" />, text: "Service" },
-    { to: "/dashboard/categories", icon: <IoSettingsSharp className="w-5 h-5" />, text: "Categorie" },
+    { to: "/dashboard/categories", icon: <IoSettingsSharp className="w-5 h-5" />, text: "Catégorie" },
   ];
 
   return (

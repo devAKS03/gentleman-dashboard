@@ -8,6 +8,7 @@ import { Trash2 } from "lucide-react";
 import { useDeleteCategoryMutation } from "@/Redux/features/dashboard/dashboard/deleteCategory";
 import Swal from "sweetalert2";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { toast } from "react-toastify";
 
 export default function Categories() {
   const { data: servicesData, isLoading: servicesLoading } = useGetServicesQuery({});
@@ -46,10 +47,10 @@ export default function Categories() {
       setTitle("");
       setIcon(null);
       setServiceId("");
-      alert("Category created successfully!");
+      toast.success("Catégorie créée avec succès !");
     } catch (err) {
       console.error("Create category failed:", err);
-      alert("Failed to create category!");
+      toast.error("Échec de la création de la catégorie !");
     }
   };
 
@@ -90,30 +91,31 @@ export default function Categories() {
 
 
 
-  const handleDelete = async (id: string) => {
-    const result = await Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#F9AA43",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    });
+ const handleDelete = async (id: string) => {
+  const result = await Swal.fire({
+    title: "Êtes-vous sûr ?",
+    text: "Vous ne pourrez pas revenir en arrière !",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#F9AA43",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Oui, supprimez-le !",
+  });
 
-    if (result.isConfirmed) {
-      try {
-        await deleteCategory(id).unwrap();
-        Swal.fire("Deleted!", "Category has been deleted.", "success");
+  if (result.isConfirmed) {
+    try {
+      await deleteCategory(id).unwrap();
+      Swal.fire("Supprimé !", "La catégorie a été supprimée.", "success");
 
-        refetch()
-        // Optionally, refetch categories if needed
-      } catch (err) {
-        console.error("Delete failed:", err);
-        Swal.fire("Error!", "Failed to delete category.", "error");
-      }
+      refetch();
+      // Optionnellement, actualiser les catégories si nécessaire
+    } catch (err) {
+      console.error("Échec de la suppression :", err);
+      Swal.fire("Erreur !", "Échec de la suppression de la catégorie.", "error");
     }
-  };
+  }
+};
+
 
 
 
@@ -129,7 +131,7 @@ export default function Categories() {
           onClick={() => setShowModal(true)}
           className="bg-[#F9AA43] text-white px-4 py-2 rounded-lg font-medium hover:opacity-90 transition-all cursor-pointer"
         >
-          + Add New Category
+         + Ajouter une nouvelle catégorie
         </button>
       </div>
 
@@ -138,7 +140,7 @@ export default function Categories() {
         <DialogContent className="sm:max-w-[450px] rounded-2xl">
           <DialogHeader>
             <DialogTitle className="text-center text-xl font-semibold text-gray-800">
-              Create a New Category
+              Créer une nouvelle catégorie
             </DialogTitle>
           </DialogHeader>
 
@@ -146,7 +148,7 @@ export default function Categories() {
             {/* Category Title */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Category Title
+              Titre de la catégorie
               </label>
               <input
                 type="text"
@@ -161,7 +163,7 @@ export default function Categories() {
             {/* Service Select */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Select Service
+                Sélectionnez un service
               </label>
               <div className="relative">
                 <select
@@ -170,7 +172,7 @@ export default function Categories() {
                   className="appearance-none w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none pr-10"
                   required
                 >
-                  <option value="">Choose a Service</option>
+                  <option value="">Choisissez un service</option>
                   {servicesData?.data?.services?.map((service: any) => (
                     <option key={service.id} value={service.id}>
                       {service.title}
@@ -198,7 +200,7 @@ export default function Categories() {
             {/* Image Upload */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Upload Image
+                Télécharger une image
               </label>
               <input
                 type="file"
@@ -252,10 +254,10 @@ export default function Categories() {
         <table className="w-full border-collapse">
           <thead>
             <tr className="bg-gray-100 text-left">
-              <th className="p-3 border-b">Icon</th>
-              <th className="p-3 border-b">Title</th>
+              <th className="p-3 border-b">Icône</th>
+              <th className="p-3 border-b">Titre</th>
               <th className="p-3 border-b">Service</th>
-              <th className="p-3 border-b">Created At</th>
+              <th className="p-3 border-b">Créé à</th>
               <th className="p-3 border-b">Action</th>
             </tr>
           </thead>
