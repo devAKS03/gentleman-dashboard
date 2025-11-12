@@ -139,7 +139,7 @@ const Sidebar = () => {
           className="w-full flex items-center justify-center gap-2 p-2 rounded-lg bg-red-400 text-white cursor-pointer"
         >
           <FiLogOut className="w-5 h-5" />
-          {isOpen && <span>Logout</span>}
+          {isOpen && <span>Déconnexion</span>}
         </button>
       </div>
     </motion.aside>
