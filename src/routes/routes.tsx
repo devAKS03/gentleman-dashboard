@@ -10,6 +10,7 @@ import Login from "@/pages/Login";
 import Services from "@/pages/Services";
 import Categories from "@/pages/Categories";
 import PrivateRoute from "./privateRoute";
+import Setting from "@/pages/Setting";
 
 
 const AppRoutes = () => {
@@ -36,6 +37,7 @@ const AppRoutes = () => {
         <Route path="request" element={<Request />} />
         <Route path="service" element={<Services/>} />
         <Route path="categories" element={<Categories />} />
+        <Route path="setting" element={<Setting/>} />
         <Route path="*" element={<Error />} />
       </Route>
     </Routes>
