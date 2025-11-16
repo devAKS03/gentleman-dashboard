@@ -2,7 +2,7 @@ import { useLayoutEffect } from "react";
 import { useSidebarStore } from "@/store/useSidebarStore";
 import { Button } from "@/components/ui/button";
 import { NavLink, useLocation } from "react-router-dom";
-import { IoHome, IoBarChart, IoSettingsSharp } from "react-icons/io5";
+import { IoHome, IoBarChart, IoSettingsSharp, IoConstructOutline, IoLayersOutline, IoSettingsOutline, IoCheckmarkCircleOutline } from "react-icons/io5";
 import { FaHistory, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { TbLayoutDashboard } from "react-icons/tb";
@@ -58,9 +58,10 @@ const Sidebar = () => {
     { to: "/dashboard", icon: <IoHome className="w-5 h-5" />, text: "Tableau de bord" },
     { to: "/dashboard/utilisateurs", icon: <IoBarChart className="w-5 h-5" />, text: "Utilisateurs" },
     { to: "/dashboard/history", icon: <FaHistory className="w-5 h-5" />, text: "Historique" },
-    { to: "/dashboard/request", icon: <IoSettingsSharp className="w-5 h-5" />, text: "Requêtes" },
-    { to: "/dashboard/service", icon: <IoSettingsSharp className="w-5 h-5" />, text: "Service" },
-    { to: "/dashboard/categories", icon: <IoSettingsSharp className="w-5 h-5" />, text: "Catégorie" },
+    { to: "/dashboard/request", icon: <IoCheckmarkCircleOutline className="w-5 h-5 " />, text: "Requêtes" },
+    { to: "/dashboard/service", icon: <IoConstructOutline className="w-5 h-5" />, text: "Service" },
+    { to: "/dashboard/categories", icon: <IoLayersOutline className="w-5 h-5" />, text: "Catégorie" },
+    { to: "/dashboard/setting", icon: <IoSettingsOutline className="w-5 h-5" />, text: "setting" },
   ];
 
   return (
@@ -141,7 +142,7 @@ const Sidebar = () => {
           <FiLogOut className="w-5 h-5" />
           {isOpen && <span>Déconnexion</span>}
         </button>
-      </div>
+      </div> 
     </motion.aside>
   );
 };

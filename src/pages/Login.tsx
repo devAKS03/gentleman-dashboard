@@ -6,14 +6,13 @@ import { useLoginMutation } from "@/Redux/features/auth/loginApi";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/Redux/features/auth/authSlice";
 import { toast } from "react-toastify";
-import { useChangePasswordMutation } from "@/Redux/features/dashboard/dashboard/changePassword";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "@/Redux/features/auth/authSlice";
 import { Navigate } from "react-router-dom";
 
 const Login = () => {
   const [login] = useLoginMutation();
-  const [changePassword] = useChangePasswordMutation();
+ 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -59,24 +58,24 @@ const Login = () => {
   };
 
   // Change password handler
- const handleChangePassword = async (e: React.FormEvent) => {
-  e.preventDefault();
-  try {
-    const res = await changePassword({
-      oldPassword: oldPassword,
-      password: newPassword,
-    }).unwrap();
-    if (res.success) {
-      toast.success(res.message);
-      setShowChangePassword(false);
-      setOldPassword("");
-      setNewPassword("");
-    }
-  } catch (err: any) {
-    console.log(err);
-    toast.error(err?.data?.message || "Failed to change password");
-  }
-};
+//  const handleChangePassword = async (e: React.FormEvent) => {
+//   e.preventDefault();
+//   try {
+//     const res = await changePassword({
+//       oldPassword: oldPassword,
+//       password: newPassword,
+//     }).unwrap();
+//     if (res.success) {
+//       toast.success(res.message);
+//       setShowChangePassword(false);
+//       setOldPassword("");
+//       setNewPassword("");
+//     }
+//   } catch (err: any) {
+//     console.log(err);
+//     toast.error(err?.data?.message || "Failed to change password");
+//   }
+// };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-primary text-white">
@@ -123,12 +122,12 @@ const Login = () => {
         </button>
 
         {/* Change password toggle */}
-        <p
+        {/* <p
           className="mt-2 text-sm text-blue-600 cursor-pointer hover:underline"
           onClick={() => setShowChangePassword(!showChangePassword)}
         >
           Change Password?
-        </p>
+        </p> */}
 
         {/* Change Password Fields */}
         {showChangePassword && (
@@ -167,13 +166,13 @@ const Login = () => {
               </span>
             </div>
 
-            <button
+            {/* <button
               type="button"
               onClick={handleChangePassword}
               className="w-full bg-green-600 hover:bg-green-700 py-2 rounded text-white cursor-pointer"
             >
               Change Password
-            </button>
+            </button> */}
           </div>
         )}
       </form>
