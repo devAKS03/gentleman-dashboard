@@ -75,8 +75,8 @@ const Sidebar = () => {
       }`}
     >
       <div className="flex justify-between items-center">
-        <h2 className="font-bold text-lg">
-          {isOpen ? "Admin Panel" : <TbLayoutDashboard className="w-7 h-7" />}
+        <h2 className="font-bold text-sm">
+          {isOpen ? "Panneau d'administration" : <TbLayoutDashboard className="w-7 h-7" />}
         </h2>
         <Button className="ms-1" variant="ghost" size="sm" onClick={toggle}>
           {isOpen ? <FaArrowLeft /> : <FaArrowRight />}
