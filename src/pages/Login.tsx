@@ -83,12 +83,12 @@ const Login = () => {
         onSubmit={handleLogin}
         className="bg-white p-6 rounded space-y-4 w-[400px] py-12 shadow-2xl"
       >
-        <h2 className="text-xl text-primary font-bold text-center">Login</h2>
+        <h2 className="text-xl text-primary font-bold text-center">Se connecter</h2>
 
         {/* Email */}
         <input
           type="email"
-          placeholder="Email"
+          placeholder="E-mail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="w-full px-4 py-2 rounded bg-gray-200 text-black focus:outline-none"
@@ -99,7 +99,7 @@ const Login = () => {
         <div className="relative">
           <input
             type={showPassword ? "text" : "password"}
-            placeholder="Password"
+            placeholder="Mot de passe"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="w-full px-4 py-2 rounded bg-gray-200 text-black focus:outline-none"
@@ -118,7 +118,7 @@ const Login = () => {
           type="submit"
           className="w-full bg-primary hover:bg-primary/80 py-2 rounded cursor-pointer"
         >
-          Login
+          Se connecter
         </button>
 
         {/* Change password toggle */}
