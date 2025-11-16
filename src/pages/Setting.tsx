@@ -47,18 +47,19 @@ export default function Setting() {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-6 bg-white shadow-lg rounded-xl">
         <h2 className="text-2xl font-semibold mb-5 text-center">
-          Change Password
+          Changer le mot de passe
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
 
           {/* Old Password */}
           <div>
-            <label className="block mb-1 font-medium">Old Password</label>
+            <label className="block mb-1 font-medium">Ancien mot de passe
+</label>
             <div className="relative">
               <input
                 type={showOldPass ? "text" : "password"}
-                placeholder="Enter old password"
+                placeholder="Entrez l'ancien mot de passe"
                 value={oldPassword}
                 onChange={(e) => setOldPassword(e.target.value)}
                 className="w-full p-2 pr-10 border rounded-md focus:ring-2 outline-none"
@@ -80,11 +81,11 @@ export default function Setting() {
 
           {/* New Password */}
           <div>
-            <label className="block mb-1 font-medium">New Password</label>
+            <label className="block mb-1 font-medium">Nouveau mot de passe</label>
             <div className="relative">
               <input
                 type={showNewPass ? "text" : "password"}
-                placeholder="Enter new password"
+                placeholder="Entrez le nouveau mot de passe"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 className="w-full p-2 pr-10 border rounded-md focus:ring-2 outline-none"

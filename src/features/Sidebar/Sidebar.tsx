@@ -61,7 +61,7 @@ const Sidebar = () => {
     { to: "/dashboard/request", icon: <IoCheckmarkCircleOutline className="w-5 h-5 " />, text: "Requêtes" },
     { to: "/dashboard/service", icon: <IoConstructOutline className="w-5 h-5" />, text: "Service" },
     { to: "/dashboard/categories", icon: <IoLayersOutline className="w-5 h-5" />, text: "Catégorie" },
-    { to: "/dashboard/setting", icon: <IoSettingsOutline className="w-5 h-5" />, text: "setting" },
+    { to: "/dashboard/setting", icon: <IoSettingsOutline className="w-5 h-5" />, text: "paramètre" },
   ];
 
   return (
