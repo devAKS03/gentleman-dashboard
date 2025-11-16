@@ -152,7 +152,7 @@ export default function Categories() {
               </label>
               <input
                 type="text"
-                placeholder="Enter category title..."
+                placeholder="Entrez le titre de la catégorie..."
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none"
@@ -239,10 +239,10 @@ export default function Categories() {
                       d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8z"
                     ></path>
                   </svg>
-                  Creating...
+                 Création...
                 </span>
               ) : (
-                "Create Category"
+                "Créer une catégorie"
               )}
             </button>
           </form>
