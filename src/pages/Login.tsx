@@ -50,9 +50,8 @@ const Login = () => {
   };
 
 
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 text-white">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 text-white ">
       <form
         onSubmit={handleLogin}
         className="bg-white p-6 rounded space-y-4 w-[400px] py-12 shadow-2xl"
