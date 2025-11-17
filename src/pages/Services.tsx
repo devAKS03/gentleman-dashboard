@@ -13,6 +13,7 @@ import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import { Trash2 } from "lucide-react";
 import Swal from "sweetalert2";
 import { useDeleteServiceMutation } from "@/Redux/features/dashboard/dashboard/deleteService";
+import { toast } from "react-toastify";
 
 export default function ServicesPage() {
   const { data, isLoading: servicesLoading,refetch } = useGetServicesQuery({});
@@ -48,38 +49,38 @@ export default function ServicesPage() {
       setTitle("");
       setIcon(null);
       setPreview(null);
-      alert("Service created successfully!");
+      toast.success("Service créé avec succès !");
     } catch (err) {
       console.error("Failed to create service:", err);
-      alert("Failed to create service!");
+     toast.error("Échec de la création du service !");
     }
   };
 
 
 
 
-  const handleDelete = async (id: string) => {
-    const result = await Swal.fire({
-      title: "Are you sure?",
-      text: "This action cannot be undone!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#F9AA43",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    });
+ const handleDelete = async (id: string) => {
+  const result = await Swal.fire({
+    title: "Êtes-vous sûr ?",
+    text: "Cette action ne peut pas être annulée !",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#F9AA43",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Oui, supprimez-le !",
+  });
 
-    if (result.isConfirmed) {
-      try {
-        await deleteService(id).unwrap();
-        Swal.fire("Deleted!", "Service has been deleted.", "success");
-        refetch(); // ✅ Refetch after deleting service
-      } catch (err) {
-        console.error("Delete failed:", err);
-        Swal.fire("Error!", "Failed to delete service.", "error");
-      }
+  if (result.isConfirmed) {
+    try {
+      await deleteService(id).unwrap();
+      Swal.fire("Supprimé !", "Le service a été supprimé.", "success");
+      refetch(); // ✅ Récupération des données après suppression du service
+    } catch (err) {
+      console.error("Échec de la suppression :", err);
+      Swal.fire("Erreur !", "La suppression du service a échoué.", "error");
     }
-  };
+  }
+};
 
   // Static placeholder data for table
   const staticServices = [
@@ -105,31 +106,31 @@ export default function ServicesPage() {
         <h1 className="text-2xl font-semibold">Services</h1>
         <Dialog>
           <DialogTrigger asChild>
-            <button className="px-4 py-2 bg-[#F9AA43] text-white rounded-lg ">
-              + Create Service
+            <button className="px-4 py-2 bg-[#F9AA43] text-white rounded-lg cursor-pointer">
+             + Créer un service
             </button>
           </DialogTrigger>
           <DialogContent className="max-w-md">
             <DialogHeader>
-              <DialogTitle>Create Service</DialogTitle>
+              <DialogTitle>Créer un service</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-1">
-                  Title
+                 Titre
                 </label>
                 <input
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  placeholder="Enter title"
+                  placeholder="Entrez le titre"
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-1">
-                  Upload Icon
+                  Icône de téléchargement
                 </label>
                 <input
                   type="file"
@@ -168,10 +169,10 @@ export default function ServicesPage() {
         <table className="w-full border-collapse">
           <thead>
             <tr className="bg-gray-100 text-left">
-              <th className="p-3 border-b">Icon</th>
-              <th className="p-3 border-b">Title</th>
-              <th className="p-3 border-b">Category Count</th>
-              <th className="p-3 border-b">Created At</th>
+              <th className="p-3 border-b">Icône</th>
+              <th className="p-3 border-b">Titre</th>
+              <th className="p-3 border-b">Nombre de catégories</th>
+              <th className="p-3 border-b">Créé à</th>
               <th className="p-3 border-b">Action</th>
 
             </tr>

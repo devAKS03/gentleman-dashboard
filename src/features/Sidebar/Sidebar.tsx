@@ -2,7 +2,7 @@ import { useLayoutEffect } from "react";
 import { useSidebarStore } from "@/store/useSidebarStore";
 import { Button } from "@/components/ui/button";
 import { NavLink, useLocation } from "react-router-dom";
-import { IoHome, IoBarChart, IoSettingsSharp } from "react-icons/io5";
+import { IoHome, IoBarChart, IoSettingsSharp, IoConstructOutline, IoLayersOutline, IoSettingsOutline, IoCheckmarkCircleOutline } from "react-icons/io5";
 import { FaHistory, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { TbLayoutDashboard } from "react-icons/tb";
@@ -58,9 +58,10 @@ const Sidebar = () => {
     { to: "/dashboard", icon: <IoHome className="w-5 h-5" />, text: "Tableau de bord" },
     { to: "/dashboard/utilisateurs", icon: <IoBarChart className="w-5 h-5" />, text: "Utilisateurs" },
     { to: "/dashboard/history", icon: <FaHistory className="w-5 h-5" />, text: "Historique" },
-    { to: "/dashboard/request", icon: <IoSettingsSharp className="w-5 h-5" />, text: "Requêtes" },
-    { to: "/dashboard/service", icon: <IoSettingsSharp className="w-5 h-5" />, text: "Service" },
-    { to: "/dashboard/categories", icon: <IoSettingsSharp className="w-5 h-5" />, text: "Categorie" },
+    { to: "/dashboard/request", icon: <IoCheckmarkCircleOutline className="w-5 h-5 " />, text: "Requêtes" },
+    { to: "/dashboard/service", icon: <IoConstructOutline className="w-5 h-5" />, text: "Service" },
+    { to: "/dashboard/categories", icon: <IoLayersOutline className="w-5 h-5" />, text: "Catégorie" },
+    { to: "/dashboard/setting", icon: <IoSettingsOutline className="w-5 h-5" />, text: "paramètre" },
   ];
 
   return (
@@ -74,8 +75,8 @@ const Sidebar = () => {
       }`}
     >
       <div className="flex justify-between items-center">
-        <h2 className="font-bold text-lg">
-          {isOpen ? "Admin Panel" : <TbLayoutDashboard className="w-7 h-7" />}
+        <h2 className="font-bold text-sm">
+          {isOpen ? "Panneau d'administration" : <TbLayoutDashboard className="w-7 h-7" />}
         </h2>
         <Button className="ms-1" variant="ghost" size="sm" onClick={toggle}>
           {isOpen ? <FaArrowLeft /> : <FaArrowRight />}
@@ -139,9 +140,9 @@ const Sidebar = () => {
           className="w-full flex items-center justify-center gap-2 p-2 rounded-lg bg-red-400 text-white cursor-pointer"
         >
           <FiLogOut className="w-5 h-5" />
-          {isOpen && <span>Logout</span>}
+          {isOpen && <span>Déconnexion</span>}
         </button>
-      </div>
+      </div> 
     </motion.aside>
   );
 };

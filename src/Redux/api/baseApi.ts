@@ -1,26 +1,4 @@
-// // src/Redux/api/baseApi.ts
-// import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-// import type { RootState } from "../store";
-
-// export const baseApi = createApi({
-//   reducerPath: "baseApi",
-//   baseQuery: fetchBaseQuery({
-//     baseUrl: "https://gentleman-backend-2.onrender.com/api/v1",
-//     prepareHeaders: (headers, { getState }) => {
-//       const token = (getState() as RootState).auth.token;
-//       console.log(token)
-//       if (token) {
-//         headers.set("Authorization", `Bearer ${token}`);
-//       }
-//       return headers;
-//     },
-//   }),
-//   tagTypes: [],
-//   endpoints: () => ({}),
-// });
-
-
-
+// this is baseApi
 import {
   createApi,
   fetchBaseQuery,
