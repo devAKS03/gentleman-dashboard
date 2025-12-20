@@ -2,7 +2,7 @@ import { useLayoutEffect } from "react";
 import { useSidebarStore } from "@/store/useSidebarStore";
 import { Button } from "@/components/ui/button";
 import { NavLink, useLocation } from "react-router-dom";
-import { IoHome, IoBarChart, IoSettingsSharp, IoConstructOutline, IoLayersOutline, IoSettingsOutline, IoCheckmarkCircleOutline } from "react-icons/io5";
+import { IoHome, IoBarChart, IoConstructOutline, IoLayersOutline, IoSettingsOutline, IoCheckmarkCircleOutline } from "react-icons/io5";
 import { FaHistory, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { TbLayoutDashboard } from "react-icons/tb";

@@ -12,6 +12,8 @@ const LocationCell = ({ latitude, longitude }: Props) => {
     const fetchLocation = async () => {
       try {
         const API_KEY = import.meta.env.VITE_OPENCAGE_API_KEY;
+        console.log(import.meta.env.VITE_OPENCAGE_API_KEY,"fdfsdff");
+
         if (!API_KEY) {
           setLocation("API key missing");
           return;
