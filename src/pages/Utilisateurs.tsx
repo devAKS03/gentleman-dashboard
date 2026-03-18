@@ -12,7 +12,6 @@ import {
   FaEdit,
 
   FaFilter,
-  FaPlus,
   FaTrashAlt,
 } from "react-icons/fa";
 import { useUpdateUserMutation } from "@/Redux/features/dashboard/Utilisateurs/updateUserApi";
@@ -48,6 +47,8 @@ const Utilisateurs = () => {
     location: "",
     dateRange: "",
   });
+
+  const [locationNames, setLocationNames] = useState<Record<string, string>>({});
 
   const handleFilterChange = (e: any) => {
     const { name, value } = e.target;
@@ -86,7 +87,7 @@ const Utilisateurs = () => {
           (filters.category === "" ||
             service.specialist.includes(filters.category)) &&
           (filters.location === "" ||
-            (service.latitude && service.longitude || "").includes(filters.location)) &&
+            (service.latitude && service.longitude && `${service.latitude}, ${service.longitude}` === filters.location)) &&
           (filters.dateRange === "" ||
             service.createdAt.startsWith(filters.dateRange))
         );
@@ -114,10 +115,44 @@ const Utilisateurs = () => {
 
   const uniqueLocations = useMemo(() => {
     const locations =
-      (data?.data as ProviderSummary[])?.map((s) => s.latitude && s.longitude || "Inconnu") ||
-      [];
+      (data?.data as ProviderSummary[])
+        ?.filter((s) => s.latitude && s.longitude && s.latitude !== "null" && s.longitude !== "null")
+        ?.map((s) => `${s.latitude}, ${s.longitude}`) || [];
     return [...new Set(locations)];
   }, [data]);
+
+  useMemo(() => {
+    const fetchLocationNames = async () => {
+      const newNames = { ...locationNames };
+      let changed = false;
+
+      for (const loc of uniqueLocations) {
+        if (!newNames[loc]) {
+          try {
+            const [lat, lon] = loc.split(", ");
+            const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=fr`;
+            const response = await fetch(url);
+            if (response.ok) {
+              const geoData = await response.json();
+              const name = geoData.city || geoData.locality || geoData.principalSubdivision || loc;
+              newNames[loc] = name;
+              changed = true;
+            }
+          } catch (error) {
+            console.error("Error fetching location name for filter:", error);
+          }
+        }
+      }
+
+      if (changed) {
+        setLocationNames(newNames);
+      }
+    };
+
+    if (uniqueLocations.length > 0) {
+      fetchLocationNames();
+    }
+  }, [uniqueLocations]);
 
   const uniqueStatuses = useMemo(() => {
     const statuses =
@@ -177,7 +212,7 @@ const Utilisateurs = () => {
     }
   };
 
-  const handleAddNewService = () => console.log("Ajouter un nouveau service cliqué");
+  // const handleAddNewService = () => console.log("Ajouter un nouveau service cliqué");
 
   if (!data) {
     return <div><LoadingSpinner /></div>;
@@ -187,12 +222,12 @@ const Utilisateurs = () => {
     <div className="min-h-screen  p-4 font-sans sm:p-6">
       <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <h1 className="text-2xl font-semibold text-gray-800">Liste des services</h1>
-        <button
+        {/* <button
           className="bg-[#F9AA43] flex gap-2 cursor-pointer items-center justify-center p-2 px-4 rounded-xl text-white"
           onClick={handleAddNewService}
         >
           <FaPlus /> Ajouter un service
-        </button>
+        </button> */}
       </div>
 
       {/* Filtres */}
@@ -236,10 +271,10 @@ const Utilisateurs = () => {
             onChange={handleFilterChange}
             className="block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
           >
-            <option value="">Localisation</option>
+            <option value="">Toutes les localisations</option>
             {uniqueLocations.map((location) => (
               <option key={String(location)} value={String(location)}>
-                {String(location)}
+                {locationNames[location] || location}
               </option>
             ))}
           </select>

@@ -20,6 +20,8 @@ export default function ServicesPage() {
   const [addService, { isLoading: isSubmitting }] = useAddServiceMutation();
     const [deleteService] = useDeleteServiceMutation();
 
+    console.log("Services data:", data);
+
 
   const [title, setTitle] = useState("");
   const [icon, setIcon] = useState<File | null>(null);
@@ -178,7 +180,7 @@ export default function ServicesPage() {
             </tr>
           </thead>
           <tbody>
-            {(data?.data?.services || staticServices).map((service: any) => (
+            {(data?.data || staticServices).map((service: any) => (
               
               <tr key={service.id} className="border-b ">
                 <td className="p-3">

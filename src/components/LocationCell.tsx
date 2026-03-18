@@ -5,48 +5,66 @@ interface Props {
   longitude: string;
 }
 
+// Global cache to store geocoding results across component instances
+const geocodeCache: Record<string, string> = {};
+
 const LocationCell = ({ latitude, longitude }: Props) => {
-  const [location, setLocation] = useState("Loading...");
+  const [location, setLocation] = useState("Chargement...");
 
   useEffect(() => {
     const fetchLocation = async () => {
-      try {
-        const API_KEY = import.meta.env.VITE_OPENCAGE_API_KEY;
-        if (!API_KEY) {
-          setLocation("API key missing");
-          return;
-        }
+      // Round coordinates to improve cache hits
+      const lat = parseFloat(latitude).toFixed(4);
+      const lon = parseFloat(longitude).toFixed(4);
+      const cacheKey = `${lat},${lon}`;
 
-        const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${API_KEY}`;
+      if (geocodeCache[cacheKey]) {
+        setLocation(geocodeCache[cacheKey]);
+        return;
+      }
+
+      try {
+        // Using BigDataCloud's Reverse Geocode Client (Keyless for client-side)
+        const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=fr`;
         const response = await fetch(url);
 
         if (!response.ok) {
-          setLocation("Failed to fetch");
-          return;
+          throw new Error("API call failed");
         }
 
         const data = await response.json();
-        const components = data.results?.[0]?.components;
-
-        if (components) {
-          const state = components.state || components.region || components.county || "Unknown state";
-          const country = components.country || "Unknown country";
-          setLocation(`${state}, ${country}`);
-        } else {
-          setLocation("Unknown");
+        
+        // Construct a readable address: Locality + City/PrincipalSubdivision
+        const parts = [];
+        if (data.city) parts.push(data.city);
+        else if (data.locality) parts.push(data.locality);
+        
+        if (data.principalSubdivision && data.principalSubdivision !== data.city) {
+          parts.push(data.principalSubdivision);
         }
+        
+        if (data.countryName) parts.push(data.countryName);
+
+        const address = parts.length > 0 ? parts.join(", ") : `${latitude}, ${longitude}`;
+        
+        geocodeCache[cacheKey] = address;
+        setLocation(address);
       } catch (error) {
-        setLocation("Error");
-        console.error(error);
+        console.error("Geocoding error:", error);
+        // Silently fallback to coordinates
+        const fallback = `${latitude}, ${longitude}`;
+        setLocation(fallback);
       }
     };
 
-    if (latitude && longitude) {
+    if (latitude && longitude && latitude !== "null" && longitude !== "null") {
       fetchLocation();
+    } else {
+      setLocation("Inconnu");
     }
   }, [latitude, longitude]);
 
-  return <span>{location}</span>;
+  return <span className="text-sm font-medium text-gray-700">{location}</span>;
 };
 
 export default LocationCell;
