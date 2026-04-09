@@ -14,6 +14,8 @@ export default function Categories() {
   const { data: servicesData, isLoading: servicesLoading } = useGetServicesQuery({});
   const { data: categoriesData, isLoading: categoriesLoading,refetch } = useGetCategoriesQuery({});
   const [addCategory, { isLoading: isSubmitting }] = useAddCategoryMutation();
+
+  console.log("services data:", servicesData);
   
   const [deleteCategory] = useDeleteCategoryMutation();
 
@@ -173,9 +175,9 @@ export default function Categories() {
                   required
                 >
                   <option value="">Choisissez un service</option>
-                  {servicesData?.data?.services?.map((service: any) => (
+                  {servicesData?.data?.map((service: any) => (
                     <option key={service.id} value={service.id}>
-                      {service.title}
+                      {service?.title}
                     </option>
                   ))}
                 </select>

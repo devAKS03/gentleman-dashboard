@@ -9,6 +9,7 @@ export const categoryApi = baseApi.injectEndpoints({
         url: `/categories/${categoryId}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Categories", "Services"],
     }),
   }),
   overrideExisting: false,

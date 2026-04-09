@@ -9,7 +9,9 @@ export const serviceApi = baseApi.injectEndpoints({
         url: `/services/${serviceId}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Services", "Categories"],
     }),
+
   }),
   overrideExisting: false,
 });

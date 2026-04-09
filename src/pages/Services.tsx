@@ -17,6 +17,8 @@ import { toast } from "react-toastify";
 
 export default function ServicesPage() {
   const { data, isLoading: servicesLoading,refetch } = useGetServicesQuery({});
+
+  
   const [addService, { isLoading: isSubmitting }] = useAddServiceMutation();
     const [deleteService] = useDeleteServiceMutation();
 
