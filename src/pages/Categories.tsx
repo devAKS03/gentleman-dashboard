@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 
 export default function Categories() {
   const { data: servicesData, isLoading: servicesLoading } = useGetServicesQuery({});
-  const { data: categoriesData, isLoading: categoriesLoading,refetch } = useGetCategoriesQuery({});
+  const { data: categoriesData, isLoading: categoriesLoading } = useGetCategoriesQuery({});
   const [addCategory, { isLoading: isSubmitting }] = useAddCategoryMutation();
 
   console.log("services data:", servicesData);
@@ -109,7 +109,6 @@ export default function Categories() {
       await deleteCategory(id).unwrap();
       Swal.fire("Supprimé !", "La catégorie a été supprimée.", "success");
 
-      refetch();
       // Optionnellement, actualiser les catégories si nécessaire
     } catch (err) {
       console.error("Échec de la suppression :", err);

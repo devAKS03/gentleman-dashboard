@@ -16,7 +16,7 @@ import { useDeleteServiceMutation } from "@/Redux/features/dashboard/dashboard/d
 import { toast } from "react-toastify";
 
 export default function ServicesPage() {
-  const { data, isLoading: servicesLoading,refetch } = useGetServicesQuery({});
+  const { data, isLoading: servicesLoading } = useGetServicesQuery({});
 
   
   const [addService, { isLoading: isSubmitting }] = useAddServiceMutation();
@@ -78,7 +78,6 @@ export default function ServicesPage() {
     try {
       await deleteService(id).unwrap();
       Swal.fire("Supprimé !", "Le service a été supprimé.", "success");
-      refetch(); // ✅ Récupération des données après suppression du service
     } catch (err) {
       console.error("Échec de la suppression :", err);
       Swal.fire("Erreur !", "La suppression du service a échoué.", "error");
